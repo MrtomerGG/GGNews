@@ -188,8 +188,7 @@
 }
 
 .about-intro h2,
-.support-section-heading h2,
-.world-section h2 {
+.support-section-heading h2 {
   margin: 4px 0 0;
   font-size: clamp(2.2rem, 4.3vw, 4.2rem);
   line-height: 1;
@@ -259,13 +258,6 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 40px;
-}
-
-.support-section-heading > p {
-  margin: 0;
-  color: var(--muted);
-  text-align: left;
-  font-size: .9rem;
 }
 
 .team-grid {
@@ -391,89 +383,6 @@
 
 .team-card:hover .team-card__line {
   width: 100%;
-}
-
-.world-section {
-  padding-bottom: clamp(75px, 10vw, 130px);
-}
-
-.world-section__card {
-  position: relative;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: minmax(260px, .62fr) minmax(0, 1.38fr);
-  border: 1px solid var(--line);
-  border-radius: 30px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.world-section__crest {
-  position: relative;
-  min-height: 430px;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(24, 200, 236, .24), transparent 40%),
-    linear-gradient(145deg, #0b3458, #031225);
-}
-
-.world-section__crest::before,
-.world-section__crest::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-}
-
-.world-section__crest::before {
-  width: 360px;
-  height: 360px;
-  border: 1px solid rgba(24, 200, 236, .2);
-}
-
-.world-section__crest::after {
-  width: 250px;
-  height: 250px;
-  border: 1px solid rgba(245, 189, 62, .17);
-}
-
-.world-section__crest img {
-  position: relative;
-  z-index: 1;
-  width: min(70%, 270px);
-  filter: drop-shadow(0 20px 28px rgba(0, 0, 0, .4));
-}
-
-.world-section__copy {
-  align-self: center;
-  padding: clamp(35px, 6vw, 72px);
-}
-
-.world-section__copy > p {
-  max-width: 690px;
-  margin: 20px 0 26px;
-  color: var(--muted);
-}
-
-.world-tags {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  direction: ltr;
-  justify-content: flex-end;
-}
-
-.world-tags li {
-  padding: 7px 11px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: var(--surface-soft);
-  font-size: .72rem;
-  font-weight: 800;
 }
 
 .not-found-page {
@@ -630,16 +539,8 @@
     padding: 0 54px 0 0;
   }
 
-  .world-section__card {
-    grid-template-columns: 1fr;
-  }
-
   .team-grid {
     gap: 20px;
-  }
-
-  .world-section__crest {
-    min-height: 330px;
   }
 
   .not-found {
@@ -704,28 +605,12 @@
     gap: 14px;
   }
 
-  .support-section-heading > p {
-    text-align: right;
-  }
-
   .team-grid {
     grid-template-columns: 1fr;
   }
 
   .team-card {
     border-radius: 21px;
-  }
-
-  .world-section__crest {
-    min-height: 270px;
-  }
-
-  .world-section__copy {
-    padding: 30px 25px;
-  }
-
-  .world-tags {
-    justify-content: flex-start;
   }
 
   .not-found-page {

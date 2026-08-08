@@ -8,6 +8,7 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft)).so
   (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
 );
 const featuredArticle = articles.find(({ data }) => data.featured) ?? articles[0];
+const otherArticles = articles.filter(({ id }) => id !== featuredArticle?.id);
 const leadTitle = featuredArticle?.data.title ?? 'החדשות של עולם tomer_GG, במקום אחד.';
 const highlightToken = leadTitle.includes('GGNEWS')
   ? 'GGNEWS'
@@ -55,23 +56,23 @@ const leadDate = featuredArticle
       <div class="section-heading">
         <div>
           <span class="section-kicker">הסיפורים שלנו</span>
-          <h2 id="articles-title">הכתבות האחרונות</h2>
+          <h2 id="articles-title">כתבות אחרות שלנו</h2>
         </div>
         <a class="section-heading__note section-heading__link" href="/articles">לכל הכתבות ←</a>
       </div>
 
       {
-        articles.length > 0 ? (
+        otherArticles.length > 0 ? (
           <div class="archive-grid home-articles-grid">
-            {articles.slice(0, 4).map((article, index) => <ArticleCard article={article} featured={index === 0} />)}
+            {otherArticles.slice(0, 4).map((article) => <ArticleCard article={article} />)}
           </div>
         ) : (
           <div class="upcoming-panel" aria-label="כתבות שיתפרסמו בהמשך">
             <div class="upcoming-panel__top">
               <span class="upcoming-panel__icon" aria-hidden="true">+</span>
-              <div><span class="section-kicker">בהמשך</span><h3>הכתבה הראשונה שלכם</h3></div>
+              <div><span class="section-kicker">בהמשך</span><h3>כתבות נוספות בדרך</h3></div>
             </div>
-            <p>ברגע שתפרסמו כתבה, היא תופיע כאן אוטומטית. לא הוספנו חדשות מומצאות.</p>
+            <p>כשיתפרסמו כתבות נוספות, הן יופיעו כאן אוטומטית — בלי לשכפל את הכתבה הראשית.</p>
           </div>
         )
       }
