@@ -1,0 +1,50 @@
+---
+const pathname = Astro.url.pathname;
+const isActive = (path: string) => path === '/' ? pathname === '/' : pathname.startsWith(path);
+---
+
+<header class="site-header" data-header>
+  <div class="shell header-main">
+    <a class="brand" href="/" aria-label="GGNEWS — עמוד הבית">
+      <img class="brand__crest" src="/assets/brand/ggnews-crest-cropped.png" alt="" width="58" height="58" />
+      <img class="brand__wordmark" src="/assets/brand/ggnews-wordmark-cropped.png" alt="GGNews" width="210" height="86" />
+    </a>
+
+    <nav class="desktop-nav" aria-label="ניווט ראשי">
+      <a class:list={[{ 'is-active': isActive('/') }]} href="/">ראשי</a>
+      <a class:list={[{ 'is-active': isActive('/articles') }]} href="/articles">כל הכתבות</a>
+      <a href="/#video">וידאו</a>
+      <a class:list={[{ 'is-active': isActive('/about') }]} href="/about">אודות</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-button" type="button" data-search-toggle aria-label="פתיחת חיפוש" aria-expanded="false">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.4-4.4m2.4-5.1A7.5 7.5 0 1 1 4 11.5a7.5 7.5 0 0 1 15 0Z"></path></svg>
+      </button>
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="החלפת מצב תצוגה">
+        <svg class="theme-icon theme-icon--sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="theme-icon theme-icon--moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.5 8.5 0 1 0 20.2 15.2Z"></path></svg>
+      </button>
+      <button class="menu-button" type="button" data-menu-toggle aria-label="פתיחת תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="search-panel" data-search-panel hidden>
+    <form class="shell search-panel__form" role="search" action="/articles" method="get">
+      <label for="site-search">מה תרצו למצוא?</label>
+      <div class="search-field">
+        <input id="site-search" name="q" type="search" placeholder="חיפוש בכתבות GGNEWS" autocomplete="off" data-search-input />
+        <button type="submit">חיפוש</button>
+      </div>
+    </form>
+  </div>
+
+  <nav class="mobile-nav" data-mobile-nav aria-label="ניווט לנייד" hidden>
+    <a href="/">ראשי</a>
+    <a href="/articles">כל הכתבות</a>
+    <a href="/#video">וידאו</a>
+    <a href="/about">אודות</a>
+  </nav>
+</header>

@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/support-pages.css';
+
+const team = [
+  {
+    number: '01',
+    initials: 'א״ל',
+    name: 'אלאד לטעים',
+    role: 'עורך הדין של חדשות הגג',
+    description: 'דואג שלא ישתמשו בתכני הגג לרעה!'
+  },
+  {
+    number: '02',
+    initials: 'פ',
+    name: 'פלאבין',
+    role: 'הקריין הסקסי, המחרמן והשרירן של חדשות הגג',
+    description: 'בלעדיו לא היו לנו חדשות הגג.'
+  },
+  {
+    number: '03',
+    initials: 'ל״ש',
+    name: 'ליאם שמח',
+    role: 'האיש מאחורי הכול',
+    description: 'Gracias, tomer GG.'
+  },
+  {
+    number: '04',
+    initials: 'GG',
+    name: 'תומר גג',
+    role: 'האחד והיחיד • האיש והאגדה',
+    description: 'האדון שתמיד מעורב: האדון תומר גג, בכבודו ובעצמו.'
+  }
+];
+---
+
+<BaseLayout
+  title="מי אנחנו | GGNEWS"
+  description="הכירו את חדשות הגג, צוות GGNEWS ועולם tomer_GG FANCLUB."
+>
+  <main class="support-page about-page" id="main-content">
+    <section class="support-hero shell" aria-labelledby="about-title">
+      <div class="support-hero__copy">
+        <span class="support-eyebrow"><span aria-hidden="true"></span> ABOUT GGNEWS</span>
+        <h1 id="about-title">הסיפור מאחורי<br /><span>חדשות הגג.</span></h1>
+        <p>אנחנו GGNEWS — המומחים והמציגים של כל מה שקורה בעולם ובתומר גג פאנקלאב.</p>
+        <a class="support-scroll-link" href="#team">להכיר את הצוות <span aria-hidden="true">↓</span></a>
+      </div>
+
+      <div class="support-hero__art" aria-hidden="true">
+        <div class="support-hero__orbit support-hero__orbit--one"></div>
+        <div class="support-hero__orbit support-hero__orbit--two"></div>
+        <span class="support-hero__code">GGMG / NEWS DIVISION</span>
+        <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+        <div class="support-hero__stamp"><small>מאז</small><strong>GG</strong><small>המהדורה</small></div>
+      </div>
+    </section>
+
+    <section class="about-intro shell" aria-labelledby="intro-title">
+      <div class="about-intro__heading">
+        <span class="support-index">01</span>
+        <div>
+          <span class="section-kicker">מי אנחנו</span>
+          <h2 id="intro-title">מערכת קטנה.<br />עולם שלם לסקר.</h2>
+        </div>
+      </div>
+
+      <div class="about-intro__body">
+        <p class="about-intro__lead">אנחנו הם חדשות הגג! צוות של שלושה אנשים — לא כולל תומר — שמביא כתבות, דיווחים, ראיונות, סיפורי קהילה וסרטונים מתוך עולם tomer_GG.</p>
+        <p>העבודה שלנו מחברת בין מראה של רשת חדשות מודרנית לבין האופי, החברות וההומור של הפאנקלאב.</p>
+      </div>
+    </section>
+
+    <section class="coverage-band" aria-label="תחומי הסיקור של GGNEWS">
+      <div class="shell coverage-band__inner">
+        <span>כתבות</span>
+        <i aria-hidden="true"></i>
+        <span>דיווחים</span>
+        <i aria-hidden="true"></i>
+        <span>ראיונות</span>
+        <i aria-hidden="true"></i>
+        <span>וידאו</span>
+        <i aria-hidden="true"></i>
+        <span>סיפורי קהילה</span>
+      </div>
+    </section>
+
+    <section class="team-section shell" id="team" aria-labelledby="team-title">
+      <div class="support-section-heading">
+        <div>
+          <span class="section-kicker">האנשים מאחורי החדשות</span>
+          <h2 id="team-title">צוות המערכת</h2>
+        </div>
+        <p>שלושה אנשי ותומר אחד.<br />כל מה שצריך למהדורה.</p>
+      </div>
+
+      <div class="team-grid">
+        {team.map((member, index) => (
+          <article class:list={['team-card', { 'team-card--featured': index === 3 }]}>
+            <div class="team-card__top">
+              <span class="team-card__number">{member.number}</span>
+              <span class="team-card__avatar" aria-hidden="true">{member.initials}</span>
+            </div>
+            <div class="team-card__copy">
+              <h3>{member.name}</h3>
+              <p class="team-card__role">{member.role}</p>
+              <p class="team-card__description">{member.description}</p>
+            </div>
+            <span class="team-card__line" aria-hidden="true"></span>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="world-section shell" aria-labelledby="world-title">
+      <div class="world-section__card">
+        <div class="world-section__crest" aria-hidden="true">
+          <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+        </div>
+        <div class="world-section__copy">
+          <span class="section-kicker">THE TOMER_GG WORLD</span>
+          <h2 id="world-title">חלק מעולם גדול יותר.</h2>
+          <p>GGNEWS הוא גוף החדשות של GGMG, בתוך העולם הקהילתי של tomer_GG FANCLUB. סביב המערכת פועלים אנשים ופרויקטים נוספים מרחבי הקהילה.</p>
+          <ul class="world-tags" aria-label="גופים ופרויקטים קשורים">
+            <li>GGMG</li>
+            <li>tomerGG FANCLUB</li>
+            <li>Redstonemine</li>
+            <li>M4E</li>
+            <li>TomerMC</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <aside class="community-note shell" aria-label="הבהרה על אופי GGNEWS">
+      <span class="community-note__icon" aria-hidden="true">i</span>
+      <p><strong>הבהרה קטנה:</strong> GGNEWS הוא גוף תקשורת קהילתי בעולם הבדיוני של tomer_GG FANCLUB, ואינו גוף חדשות או ממשל רשמי בעולם האמיתי.</p>
+    </aside>
+  </main>
+
+</BaseLayout>

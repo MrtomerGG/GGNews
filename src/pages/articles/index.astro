@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import '../../styles/articles.css';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+---
+
+<BaseLayout title="כל הכתבות | GGNEWS" description="כל הכתבות והעדכונים של GGNEWS במקום אחד.">
+  <main id="main-content" class="articles-page">
+    <section class="articles-masthead">
+      <div class="shell articles-masthead__inner">
+        <div>
+          <span class="articles-masthead__kicker">GGNEWS / ARCHIVE</span>
+          <h1>כל הכתבות</h1>
+          <p>הדיווחים, הסיפורים והעדכונים של עולם tomer_GG — מסודרים מהחדש לישן.</p>
+        </div>
+        <div class="articles-masthead__count" aria-label={`${articles.length} כתבות פורסמו`}>
+          <strong>{String(articles.length).padStart(2, '0')}</strong>
+          <span>כתבות<br />במערכת</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell archive-section" id="articles" aria-labelledby="archive-heading">
+      <div class="archive-section__heading">
+        <div>
+          <span>הפרסומים האחרונים</span>
+          <h2 id="archive-heading">מה חדש ב-GGNEWS</h2>
+        </div>
+        <p>אפשר להשתמש בכפתור החיפוש כדי למצוא כתבה לפי כותרת, מחבר או נושא.</p>
+      </div>
+
+      {
+        articles.length > 0 ? (
+          <div class="archive-grid">
+            {articles.map((article, index) => <ArticleCard article={article} featured={index === 0} />)}
+          </div>
+        ) : (
+          <div class="archive-empty">
+            <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+            <h2>הכתבה הראשונה בדרך</h2>
+            <p>עדיין לא פורסמו כתבות. ברגע שהמערכת תפרסם כתבה, היא תופיע כאן.</p>
+          </div>
+        )
+      }
+
+      <p class="search-empty archive-search-empty" data-search-empty hidden>
+        לא נמצאו כתבות שמתאימות לחיפוש.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
