@@ -29,15 +29,6 @@ const team = [
     height: 992,
     role: 'האיש מאחורי הכול',
     description: 'מוביל את העשייה מאחורי הקלעים ושומר שהמערכת תמשיך להתקדם.'
-  },
-  {
-    number: '04',
-    name: 'תומר גג',
-    image: '/assets/team/tomer-gg.jpg',
-    width: 651,
-    height: 631,
-    role: 'היוצר שבמרכז עולם GG',
-    description: 'מחבר בין הקהילה, התוכן והפרויקטים שמרכיבים את עולם tomer_GG.'
   }
 ];
 ---
@@ -73,7 +64,15 @@ const team = [
       </div>
 
       <div class="about-intro__body">
-        <p class="about-intro__lead">tomer_GG הוא היוצר שעומד במרכז הפאנקלב ועולם ה־GG. הוא יוצר תוכן, משדר, משחק ומוביל פרויקטים ב־YouTube ובקהילה — וכל עולם הגג התחיל מהזהות והרעיונות שלו.</p>
+        <article class="tomer-intro">
+          <img src="/assets/team/tomer-gg.jpg" alt="תומר גג" width="651" height="631" />
+          <div class="tomer-intro__copy">
+            <span>tomer_GG</span>
+            <h3>תומר גג</h3>
+            <p class="tomer-intro__role">היוצר שבמרכז עולם GG</p>
+            <p>מחבר בין הקהילה, התוכן והפרויקטים שמרכיבים את עולם tomer_GG.</p>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -100,8 +99,8 @@ const team = [
       </div>
 
       <div class="team-grid">
-        {team.map((member, index) => (
-          <article class:list={['team-card', { 'team-card--featured': index === 3 }]}>
+        {team.map((member) => (
+          <article class="team-card">
             <div class="team-card__media">
               <img src={member.image} alt={member.name} loading="lazy" width={member.width} height={member.height} />
               <span class="team-card__number">{member.number}</span>
