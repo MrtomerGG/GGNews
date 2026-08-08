@@ -6,6 +6,30 @@ const searchInput = document.querySelector('[data-search-input]');
 const searchEmpty = document.querySelector('[data-search-empty]');
 const menuToggle = document.querySelector('[data-menu-toggle]');
 const mobileNav = document.querySelector('[data-mobile-nav]');
+const siteAnnouncement = document.querySelector('[data-site-announcement]');
+const announcementClose = document.querySelector('[data-announcement-close]');
+
+if (siteAnnouncement) {
+  const announcementKey = siteAnnouncement.dataset.announcementKey;
+
+  try {
+    if (localStorage.getItem('ggnews-dismissed-announcement') === announcementKey) {
+      siteAnnouncement.hidden = true;
+    }
+  } catch {
+    // The announcement remains visible when storage is unavailable.
+  }
+
+  announcementClose?.addEventListener('click', () => {
+    siteAnnouncement.hidden = true;
+
+    try {
+      localStorage.setItem('ggnews-dismissed-announcement', announcementKey);
+    } catch {
+      // Dismissal still works for the current page without local storage.
+    }
+  });
+}
 
 themeToggle?.addEventListener('click', () => {
   const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';

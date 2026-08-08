@@ -1,6 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
+import siteSettings from '../data/site.json';
+
 const pathname = Astro.url.pathname;
 const isActive = (path: string) => path === '/' ? pathname === '/' : pathname.startsWith(path);
+const publishedArticles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+const latestArticle = publishedArticles[0];
+const latestArticleUrl = latestArticle ? `/articles/${latestArticle.id}/` : '/articles';
+const isLatestArticle = pathname === latestArticleUrl;
+const isArticlesArchive = pathname === '/articles' || pathname === '/articles/';
 ---
 
 <header class="site-header" data-header>
@@ -12,8 +22,8 @@ const isActive = (path: string) => path === '/' ? pathname === '/' : pathname.st
 
     <nav class="desktop-nav" aria-label="ניווט ראשי">
       <a class:list={[{ 'is-active': isActive('/') }]} href="/">ראשי</a>
-      <a class:list={[{ 'is-active': isActive('/articles') }]} href="/articles">כל הכתבות</a>
-      <a href="/#video">וידאו</a>
+      <a class:list={[{ 'is-active': isLatestArticle }]} href={latestArticleUrl}>כתבה אחרונה</a>
+      <a class:list={[{ 'is-active': isArticlesArchive || (isActive('/articles') && !isLatestArticle) }]} href="/articles">כל הכתבות</a>
       <a class:list={[{ 'is-active': isActive('/about') }]} href="/about">אודות</a>
     </nav>
 
@@ -43,8 +53,27 @@ const isActive = (path: string) => path === '/' ? pathname === '/' : pathname.st
 
   <nav class="mobile-nav" data-mobile-nav aria-label="ניווט לנייד" hidden>
     <a href="/">ראשי</a>
+    <a href={latestArticleUrl}>כתבה אחרונה</a>
     <a href="/articles">כל הכתבות</a>
-    <a href="/#video">וידאו</a>
     <a href="/about">אודות</a>
   </nav>
+
+  {
+    siteSettings.enabled && siteSettings.text && (
+      <aside
+        class="site-announcement"
+        data-site-announcement
+        data-announcement-key={siteSettings.text}
+        aria-label="הודעת המערכת"
+      >
+        <div class="shell site-announcement__inner">
+          <span class="site-announcement__label">עדכון</span>
+          <p>{siteSettings.text}</p>
+          <button type="button" data-announcement-close aria-label="סגירת ההודעה">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+          </button>
+        </div>
+      </aside>
+    )
+  }
 </header>

@@ -6,6 +6,25 @@ media:
   rename: safe
 
 content:
+  - name: siteAnnouncement
+    label: הודעת האתר
+    type: file
+    path: src/data/site.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: enabled
+        label: להציג את ההודעה
+        type: boolean
+        default: true
+
+      - name: text
+        label: תוכן ההודעה
+        type: text
+        required: true
+        description: הודעה קצרה שתופיע בחלק העליון של האתר.
+
   - name: articles
     label: כתבות
     type: collection

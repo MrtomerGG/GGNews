@@ -14,9 +14,9 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft)).so
     <section class="articles-masthead">
       <div class="shell articles-masthead__inner">
         <div>
-          <span class="articles-masthead__kicker">GGNEWS / ARCHIVE</span>
+          <span class="articles-masthead__kicker">GGNEWS</span>
           <h1>כל הכתבות</h1>
-          <p>הדיווחים, הסיפורים והעדכונים של עולם tomer_GG — מסודרים מהחדש לישן.</p>
+          <p>הדיווחים, הסיפורים, והעדכונים של הפאנקלב הטוב בעולם!</p>
         </div>
         <div class="articles-masthead__count" aria-label={`${articles.length} כתבות פורסמו`}>
           <strong>{String(articles.length).padStart(2, '0')}</strong>

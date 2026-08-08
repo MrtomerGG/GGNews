@@ -25,13 +25,6 @@ const leadDate = featuredArticle
 ---
 
 <BaseLayout>
-  <div class="breaking-strip" aria-label="מבזק חדשות">
-    <div class="shell breaking-strip__inner">
-      <span class="breaking-strip__label">מבזק</span>
-      <p>ברוכים הבאים ל-GGNEWS — אתר החדשות הרשמי נמצא כעת בשלבי הקמה.</p>
-    </div>
-  </div>
-
   <main id="main-content">
     <section class="hero shell" aria-labelledby="lead-title">
       <article class="lead-story" data-searchable={`${leadTitle} ${leadExcerpt} ${leadAuthor}`}>
@@ -56,29 +49,6 @@ const leadDate = featuredArticle
         </div>
       </article>
 
-      <aside class="news-rail" aria-labelledby="news-rail-title">
-        <div class="section-heading section-heading--compact">
-          <div>
-            <span class="section-kicker">מהדורה ראשונה</span>
-            <h2 id="news-rail-title">מתחילים כאן</h2>
-          </div>
-        </div>
-
-        <div class="rail-item">
-          <span class="rail-item__number">01</span>
-          <div><p>אתר בעברית מלאה</p><small>ממשק RTL נוח בכל מסך</small></div>
-        </div>
-        <div class="rail-item">
-          <span class="rail-item__number">02</span>
-          <div><p>כתבות וסרטונים</p><small>תוכן GGNEWS וסרטוני Isaac Studios</small></div>
-        </div>
-        <div class="rail-item">
-          <span class="rail-item__number">03</span>
-          <div><p>זהות חדשותית חדשה</p><small>כחול, ציאן וזהב מתוך המותג</small></div>
-        </div>
-
-        <a class="rail-link" href="/about">הכירו את מערכת GGNEWS <span aria-hidden="true">←</span></a>
-      </aside>
     </section>
 
     <section class="articles-section shell" id="articles" aria-labelledby="articles-title">
@@ -109,30 +79,12 @@ const leadDate = featuredArticle
       <p class="search-empty" data-search-empty hidden>לא נמצאו כתבות שמתאימות לחיפוש.</p>
     </section>
 
-    <section class="video-section" id="video">
-      <div class="shell video-section__inner">
-        <div class="video-copy">
-          <span class="section-kicker section-kicker--light">GGNEWS VIDEO</span>
-          <h2>כתבות וידאו,<br />בלי לצאת מהאתר.</h2>
-          <p>סרטוני Isaac Studios יוכלו להשתלב ישירות בתוך כתבות GGNEWS באמצעות YouTube.</p>
-          <span class="video-note">קישור הערוץ יתווסף בהמשך</span>
-        </div>
-        <div class="video-stage" aria-label="אזור וידאו לדוגמה">
-          <div class="video-stage__screen">
-            <img src="/assets/brand/ggnews-crest-cropped.png" alt="סמל GGNEWS" />
-            <span class="play-button" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 7 8 5-8 5V7Z" /></svg></span>
-          </div>
-          <div class="video-stage__caption"><strong>GGNEWS</strong><span>הסיפור המלא. בתמונה ובקול.</span></div>
-        </div>
-      </div>
-    </section>
-
     <section class="about-strip shell" id="about">
       <div class="about-strip__mark"><img src="/assets/brand/ggnews-crest-cropped.png" alt="" /></div>
       <div class="about-strip__copy">
         <span class="section-kicker">מי אנחנו</span>
-        <h2>חדשות הגג — הבית של הסיפורים מעולם tomer_GG.</h2>
-        <p>אנחנו מביאים כתבות, ראיונות, סיפורי קהילה וסרטונים מתוך עולם tomer_GG FANCLUB, כחלק מקבוצת המדיה GGMG.</p>
+        <h2>חדשות הגג - הלב של הפאנקלב | כל הדברים החמים במקום אחד.</h2>
+        <p>אנחנו מביאים כתבות, ראיונות, סיפורים מהפאנקלב ומוציאים אותם לעולם ללא שקרים.</p>
       </div>
       <a class="secondary-button" href="/about">עוד על GGNEWS <span aria-hidden="true">←</span></a>
     </section>

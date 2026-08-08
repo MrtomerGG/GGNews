@@ -50,6 +50,10 @@ git push -u origin main
 
 לפני פרסום בודקים שהכותרת, התאריך, שם הכותב/ת, זכויות השימוש בתמונה ותוכן הכתבה.
 
+### עריכת ההודעה בראש האתר
+
+ב-Pages CMS בוחרים **הודעת האתר**. אפשר לערוך את הטקסט או לכבות את **להציג את ההודעה**, ואז שומרים. השמירה מעדכנת את `src/data/site.json` ומפעילה פריסה חדשה ב-Cloudflare.
+
 ## סרטוני YouTube
 
 בשדה **מזהה YouTube** מדביקים רק את המזהה בן 11 התווים. למשל, בכתובת:
@@ -89,7 +93,8 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ
 - Install/run: `npm install`, then `npm run dev`.
 - Production check: `npm run build`, then `npm run preview`.
 - Content lives in `src/content/articles/*.md`; uploads live in `public/assets/uploads/`.
-- Sign in at [Pages CMS](https://app.pagescms.org/), authorize only the GGNews repository, edit **כתבות**, and turn off **טיוטה** when the story is ready.
+- Sign in at [Pages CMS](https://app.pagescms.org/), authorize only `MrtomerGG/GGNews`, edit **כתבות**, and turn off **טיוטה** when the story is ready.
+- Use **הודעת האתר** in Pages CMS to edit or disable the site announcement.
 - In Cloudflare Pages use branch `main`, build command `npm run build`, and output `dist`.
 - Put only the 11-character YouTube video ID in `youtubeId`, never the complete URL.
 - Hosting and the editor can stay on free plans; the already-owned domain still has its normal annual renewal cost.
