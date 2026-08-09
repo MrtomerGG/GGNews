@@ -128,6 +128,7 @@ if (notificationControl) {
     try {
       await OneSignal.init({
         appId,
+        safari_web_id: 'web.onesignal.auto.0d033746-9b8a-4e2f-a0e7-88cee0acb9dd',
         serviceWorkerPath: 'push/onesignal/OneSignalSDKWorker.js',
         serviceWorkerParam: { scope: '/push/onesignal/' },
         notifyButton: { enable: false },
