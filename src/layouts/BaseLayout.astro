@@ -14,7 +14,8 @@ const {
   description = 'חדשות, כתבות וסיפורים מעולם tomer_GG FANCLUB.'
 } = Astro.props;
 
-const oneSignalAppId = notificationSettings.appId.trim();
+const oneSignalAppIdValue = (notificationSettings as { appId?: unknown }).appId;
+const oneSignalAppId = typeof oneSignalAppIdValue === 'string' ? oneSignalAppIdValue.trim() : '';
 const notificationsConfigured = notificationSettings.enabled
   && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(oneSignalAppId);
 ---

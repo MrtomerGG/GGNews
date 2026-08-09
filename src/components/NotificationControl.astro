@@ -1,7 +1,8 @@
 ---
 import notificationSettings from '../data/notifications.json';
 
-const appId = notificationSettings.appId.trim();
+const appIdValue = (notificationSettings as { appId?: unknown }).appId;
+const appId = typeof appIdValue === 'string' ? appIdValue.trim() : '';
 const isConfigured = notificationSettings.enabled && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(appId);
 ---
 
