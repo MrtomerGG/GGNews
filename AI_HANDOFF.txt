@@ -234,16 +234,38 @@ The OneSignal App API Key must be stored only in this GitHub Actions repository 
 Never write its value in this file, source code, Pages CMS, chat, or a Git commit.
 The public App ID is not the private API key.
 
-Immediate remaining OneSignal steps for the user:
+Current OneSignal investigation (2026-08-09):
 
-1. Create an App API Key in OneSignal under Settings > Keys & IDs.
-2. Add it to GitHub under Settings > Secrets and variables > Actions using the exact
-   secret name ONESIGNAL_APP_API_KEY.
-3. Wait for a successful Cloudflare deployment.
-4. Open https://ggnews.club in a normal browser window, click the GGNEWS bell,
-   select הפעלת התראות, and allow browser notifications.
-5. Confirm the device appears in OneSignal under Audience > Subscriptions.
-6. Send a manual test push from OneSignal.
+- ONESIGNAL_APP_API_KEY is configured in GitHub Actions.
+- The phone appears in OneSignal, and a direct dashboard test notification succeeded.
+  This proves the phone, browser permission, push token, and service worker can receive push.
+- Cloudflare deployment waiting now works. The latest test article became available at:
+  https://ggnews.club/articles/othertest/
+- Automatic sends for bestarticle and othertest reached OneSignal, but OneSignal returned
+  HTTP 200 without a message ID. The current script logged this as:
+  "OneSignal accepted ..., but there are no subscribed devices yet."
+- According to OneSignal, HTTP 200 without an ID means no message was created because no
+  valid subscription matched the requested audience. The word "accepted" is misleading.
+- The automatic sender targets the official built-in segment named "Subscribed Users".
+  A direct dashboard test targets the exact Test User and therefore does not prove that
+  this segment currently contains the phone.
+
+NEXT CHECK - DO THIS BEFORE PUBLISHING ANOTHER TEST ARTICLE:
+
+1. In the same OneSignal app, open Settings > Keys & IDs and verify the App ID is exactly:
+   b584eb1f-6db3-4e68-befa-329e1082d122
+2. Open Audience > Segments > Subscribed Users.
+3. Verify the segment exists, is active/not paused, and its Push > Subscribed count is 1.
+4. Do not rely only on the total number under Audience > Subscriptions.
+5. If the segment count is 0 or the segment is missing, fix/create the audience in OneSignal.
+6. If the segment count is 1, update the sender diagnostics before testing again:
+   - print OneSignal's sanitized response body when no message ID is returned;
+   - mark a no-ID response as a failed/warning run instead of success;
+   - query/log the Subscribed Users segment existence, active state, and subscriber count;
+   - optionally add a one-time manual Subscription-ID diagnostic workflow.
+
+Keep normal production delivery segment-based. Do not permanently store or enumerate
+individual device IDs; that would fail as more friends subscribe.
 
 Automatic notification behavior:
 
@@ -251,6 +273,9 @@ Automatic notification behavior:
 - Editing an already-public article does not normally trigger a new alert.
 - The workflow waits for the article page to become live on Cloudflare before sending.
 - The alert uses the article title, excerpt, cover, and final article URL.
+- Article notification URLs currently preserve filename capitalization, but Astro slugifies
+  content IDs to lowercase. Before future capitalized filenames are used, update
+  scripts/notify-new-articles.mjs to generate URLs using Astro-compatible slugging.
 
 
 DOMAIN AND HOSTING
