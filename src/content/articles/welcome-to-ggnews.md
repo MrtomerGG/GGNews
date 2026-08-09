@@ -1,7 +1,7 @@
 ---
 title: ברוכים הבאים ל-GGNEWS לכאורה 3
 excerpt: כתבת היכרות ובדיקה שמציגה כיצד כתבות אמיתיות ייראו באתר GGNEWS.
-publishedAt: 2026-08-09T04:39:00Z
+publishedAt: 1900-01-01T05:00:00Z
 author: מערכת GGNEWS
 featured: false
 draft: true
