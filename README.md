@@ -88,6 +88,37 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
 שינוי nameservers מעביר את ניהול ה-DNS מ-Namecheap ל-Cloudflare; הוא לא מעביר את הבעלות על הדומיין. הדומיין נשאר ב-Namecheap ועדיין צריך לחדש אותו בתשלום בכל שנה. [הדרכת Namecheap](https://www.namecheap.com/support/knowledgebase/article.aspx/9607/2210/how-to-set-up-dns-records-for-your-domain-in-a-cloudflare-account/).
 
+## התראות על כתבות חדשות
+
+האתר כולל מערכת התראות Web Push לבחירה באמצעות OneSignal. היא כבויה כברירת מחדל עד להשלמת ההגדרה. כשהיא פעילה, פעמון מופיע בכותרת האתר והמבקר יכול להפעיל או לכבות התראות בעצמו. האתר לעולם לא פותח את בקשת ההרשאה של הדפדפן בלי לחיצה של המבקר.
+
+### הגדרה חד-פעמית
+
+1. יוצרים חשבון חינמי ב-[OneSignal](https://onesignal.com/) ויוצרים אפליקציה חדשה.
+2. מוסיפים פלטפורמת **Web**, בוחרים **Custom Code** ומגדירים:
+   - Site name: `GGNEWS`
+   - Site URL: `https://ggnews.club`
+   - Default icon: `https://ggnews.club/assets/brand/ggnews-crest-cropped.png`
+   - אין להפעיל Auto Prompt או Subscription Bell של OneSignal; לאתר יש כפתור הרשמה משלו.
+3. בהגדרות המתקדמות של ה-Service Worker מגדירים:
+   - Path: `/push/onesignal/`
+   - Filename: `OneSignalSDKWorker.js`
+   - Registration scope: `/push/onesignal/`
+4. ב-OneSignal פותחים **Settings → Keys & IDs**. מעתיקים את ה-**App ID**, ואז יוצרים **App API Key** ושומרים אותו מיד במקום בטוח. ה-App ID ציבורי; מפתח ה-API סודי ואסור להדביק אותו באתר או לשמור אותו בקובץ במאגר.
+5. ב-GitHub פותחים את המאגר → **Settings → Secrets and variables → Actions → New repository secret**. יוצרים סוד בשם המדויק `ONESIGNAL_APP_API_KEY` ומדביקים בו את ה-App API Key.
+6. ב-Pages CMS פותחים **הגדרות התראות**, מדביקים את ה-App ID בשדה המתאים, מפעילים **להציג ולאפשר הרשמה להתראות** ושומרים.
+7. מחכים לפריסת Cloudflare, פותחים את `https://ggnews.club`, לוחצים על הפעמון ומאשרים התראות כדי לבדוק את ההרשמה.
+
+### מתי נשלחת התראה
+
+שמירת טיוטה או עריכת כתבה קיימת אינה שולחת דבר. כאשר כתבה חדשה נוצרת כגלויה, או כשהמתג **טיוטה** משתנה מפעיל לכבוי, GitHub Actions ממתין עד שעמוד הכתבה זמין ב-Cloudflare ואז שולח התראה לכל מי שנרשם. לחיצה על ההתראה פותחת את הכתבה החדשה.
+
+אם כתבה מוחזרת לטיוטה ואז מתפרסמת מחדש, היא יכולה ליצור התראה נוספת. אפשר לראות הצלחות ושגיאות ב-GitHub תחת **Actions → Notify subscribers about new articles**.
+
+ב-iPhone וב-iPad נדרשת גרסת iOS/iPadOS 16.4 ומעלה. המבקר צריך להוסיף את GGNEWS למסך הבית, לפתוח את האתר מהסמל שנוסף ורק אז ללחוץ על הפעמון. ההתראות קשורות לכתובת המדויקת `https://ggnews.club`; אין לבדוק הרשמה דרך כתובת `pages.dev` או דרך `www`.
+
+ה-Service Worker נמצא ב-`public/push/onesignal/OneSignalSDKWorker.js`, הגדרות האתר הציבוריות נמצאות ב-`src/data/notifications.json`, והשליחה האוטומטית מוגדרת ב-`.github/workflows/notify-new-articles.yml`. התוכנית החינמית של OneSignal מאפשרת עד 10,000 מנויי Web Push בכל שליחה.
+
 ## English quick reference
 
 - Install/run: `npm install`, then `npm run dev`.
@@ -95,6 +126,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ
 - Content lives in `src/content/articles/*.md`; uploads live in `public/assets/uploads/`.
 - Sign in at [Pages CMS](https://app.pagescms.org/), authorize only `MrtomerGG/GGNews`, edit **כתבות**, and turn off **טיוטה** when the story is ready.
 - Use **הודעת האתר** in Pages CMS to edit or disable the site announcement.
+- Use **הגדרות התראות** in Pages CMS to add the public OneSignal App ID and enable the opt-in bell after the GitHub secret `ONESIGNAL_APP_API_KEY` is configured.
 - In Cloudflare Pages use branch `main`, build command `npm run build`, and output `dist`.
 - Put only the 11-character YouTube video ID in `youtubeId`, never the complete URL.
 - Hosting and the editor can stay on free plans; the already-owned domain still has its normal annual renewal cost.

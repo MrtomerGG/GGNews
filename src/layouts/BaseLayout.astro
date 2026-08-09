@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import notificationSettings from '../data/notifications.json';
 
 interface Props {
   title?: string;
@@ -12,6 +13,10 @@ const {
   title = 'GGNEWS — חדשות הגג',
   description = 'חדשות, כתבות וסיפורים מעולם tomer_GG FANCLUB.'
 } = Astro.props;
+
+const oneSignalAppId = notificationSettings.appId.trim();
+const notificationsConfigured = notificationSettings.enabled
+  && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(oneSignalAppId);
 ---
 
 <!doctype html>
@@ -22,7 +27,16 @@ const {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#061a32" />
     <link rel="icon" type="image/png" href="/assets/brand/ggnews-crest-cropped.png" />
+    <link rel="apple-touch-icon" href="/assets/brand/ggnews-crest-cropped.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="GGNEWS" />
     <title>{title}</title>
+    {
+      notificationsConfigured && (
+        <script is:inline src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+      )
+    }
     <script is:inline>
       (() => {
         const saved = localStorage.getItem('ggnews-theme');
@@ -37,5 +51,6 @@ const {
     <slot />
     <SiteFooter />
     <script src="/scripts/site.js" defer></script>
+    {notificationsConfigured && <script src="/scripts/notifications.js" defer></script>}
   </body>
 </html>

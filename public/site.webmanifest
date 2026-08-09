@@ -1,0 +1,20 @@
+{
+  "name": "GGNEWS — חדשות הגג",
+  "short_name": "GGNEWS",
+  "description": "חדשות, כתבות וסיפורים מקהילת tomer_GG FANCLUB.",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#edf2f6",
+  "theme_color": "#061a32",
+  "icons": [
+    {
+      "src": "/assets/brand/ggnews-crest-cropped.png",
+      "sizes": "976x976",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

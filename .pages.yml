@@ -25,6 +25,29 @@ content:
         required: true
         description: הודעה קצרה שתופיע בחלק העליון של האתר.
 
+  - name: notificationSettings
+    label: הגדרות התראות
+    type: file
+    path: src/data/notifications.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: enabled
+        label: להציג ולאפשר הרשמה להתראות
+        type: boolean
+        default: false
+        description: יש להפעיל רק לאחר השלמת הגדרת OneSignal והמפתח הסודי ב-GitHub.
+
+      - name: appId
+        label: מזהה האפליקציה של OneSignal
+        type: string
+        default: ""
+        description: מזהה ציבורי בלבד מתוך OneSignal. אין להדביק כאן את מפתח ה-API הסודי.
+        pattern:
+          regex: "^$|^[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+          message: יש להזין App ID תקין של OneSignal או להשאיר את השדה ריק.
+
   - name: articles
     label: כתבות
     type: collection
