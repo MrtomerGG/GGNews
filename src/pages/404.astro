@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/support-pages.css';
+---
+
+<BaseLayout
+  title="העמוד לא נמצא | GGNEWS"
+  description="העמוד שחיפשתם לא נמצא במערכת GGNEWS."
+>
+  <main class="support-page not-found-page" id="main-content">
+    <section class="not-found shell" aria-labelledby="not-found-title">
+      <div class="not-found__visual" aria-hidden="true">
+        <span class="not-found__signal"></span>
+        <span class="not-found__number">404</span>
+        <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+        <span class="not-found__grid"></span>
+      </div>
+
+      <div class="not-found__copy">
+        <span class="support-eyebrow"><span aria-hidden="true"></span> PAGE NOT FOUND</span>
+        <h1 id="not-found-title">העמוד ירד<br />מהמהדורה.</h1>
+        <p>הכתובת שחיפשתם לא נמצאה במערכת. ייתכן שהעמוד הועבר, נמחק או שהקישור אינו נכון.</p>
+        <div class="not-found__actions">
+          <a class="primary-button" href="/">חזרה לעמוד הראשי <span aria-hidden="true">←</span></a>
+          <a class="not-found__secondary" href="/about">מי אנחנו</a>
+        </div>
+        <div class="not-found__reference"><span>קוד מערכת</span><strong>GGN—404</strong></div>
+      </div>
+    </section>
+  </main>
+
+</BaseLayout>

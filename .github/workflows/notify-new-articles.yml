@@ -1,0 +1,42 @@
+name: Notify subscribers about new articles
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/content/articles/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ggnews-article-notifications
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out the published revision
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install notifier dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Notify subscribers after the article is live
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+          SITE_URL: https://ggnews.club
+          ONESIGNAL_APP_API_KEY: ${{ secrets.ONESIGNAL_APP_API_KEY }}
+        run: node scripts/notify-new-articles.mjs

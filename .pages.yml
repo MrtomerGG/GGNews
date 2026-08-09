@@ -1,0 +1,149 @@
+media:
+  input: public/assets/uploads
+  output: /assets/uploads
+  categories: [image]
+  extensions: [jpg, jpeg, png, webp, avif, gif]
+  rename: safe
+
+content:
+  - name: siteAnnouncement
+    label: הודעת האתר
+    type: file
+    path: src/data/site.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: enabled
+        label: להציג את ההודעה
+        type: boolean
+        default: true
+
+      - name: text
+        label: תוכן ההודעה
+        type: text
+        required: true
+        description: הודעה קצרה שתופיע בחלק העליון של האתר.
+
+  - name: notificationSettings
+    label: הגדרות התראות
+    type: file
+    path: src/data/notifications.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: enabled
+        label: להציג ולאפשר הרשמה להתראות
+        type: boolean
+        default: false
+        description: יש להפעיל רק לאחר השלמת הגדרת OneSignal והמפתח הסודי ב-GitHub.
+
+      - name: appId
+        label: מזהה האפליקציה של OneSignal
+        type: string
+        default: ""
+        description: מזהה ציבורי בלבד מתוך OneSignal. אין להדביק כאן את מפתח ה-API הסודי.
+        pattern:
+          regex: "^$|^[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+          message: יש להזין App ID תקין של OneSignal או להשאיר את השדה ריק.
+
+  - name: articles
+    label: כתבות
+    type: collection
+    path: src/content/articles
+    format: yaml-frontmatter
+    filename:
+      template: "{year}-{month}-{day}-{primary}.md"
+      field: create
+    view:
+      fields: [title, author, publishedAt, featured, draft]
+      primary: title
+      sort: [publishedAt, title]
+      search: [title, excerpt, author]
+      default:
+        sort: publishedAt
+        order: desc
+    fields:
+      - name: title
+        label: כותרת
+        type: string
+        required: true
+        description: הכותרת הראשית של הכתבה.
+
+      - name: excerpt
+        label: תקציר
+        type: text
+        required: true
+        description: משפט או שניים שיופיעו בכרטיס הכתבה.
+
+      - name: author
+        label: כותב/ת
+        type: string
+        required: true
+        default: מערכת GGNEWS
+
+      - name: publishedAt
+        label: תאריך ושעת פרסום
+        type: date
+        required: true
+        options:
+          time: true
+          format: "yyyy-MM-dd'T'HH:mm:ssXXX"
+
+      - name: updatedAt
+        label: תאריך ושעת עדכון
+        type: date
+        default: ""
+        description: להשאיר ריק אם הכתבה לא עודכנה לאחר הפרסום.
+        options:
+          time: true
+          format: "yyyy-MM-dd'T'HH:mm:ssXXX"
+
+      - name: cover
+        label: תמונה ראשית
+        type: image
+        description: אופציונלי. מומלצת תמונה רוחבית ביחס 16:9.
+        options:
+          categories: [image]
+          extensions: [jpg, jpeg, png, webp, avif, gif]
+          rename: safe
+
+      - name: youtubeId
+        label: מזהה YouTube
+        type: string
+        description: אופציונלי. להדביק רק את 11 התווים שאחרי v= ולא את הקישור המלא.
+        pattern:
+          regex: "^[A-Za-z0-9_-]{11}$"
+          message: יש להזין מזהה YouTube של 11 תווים בלבד.
+
+      - name: featured
+        label: כתבה ראשית
+        type: boolean
+        default: false
+        description: הכתבה תוצג באזור המרכזי בדף הבית.
+
+      - name: draft
+        label: טיוטה
+        type: boolean
+        default: true
+        description: כל עוד המתג פעיל, הכתבה לא תוצג באתר הפומבי.
+
+      - name: body
+        label: תוכן הכתבה
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: app
+    templates:
+      create: "content: create {path}"
+      update: "content: update {path}"
+      delete: "content: delete {path}"
+      rename: "content: rename {oldPath} to {newPath}"

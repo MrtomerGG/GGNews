@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  featured?: boolean;
+}
+
+const { article, featured = false } = Astro.props;
+const { data, id } = article;
+const articleUrl = `/articles/${id}/`;
+const isTestArticle = id === 'welcome-to-ggnews';
+const readingMinutes = Math.max(1, Math.ceil(article.body.trim().split(/\s+/u).length / 200));
+const publishedLabel = new Intl.DateTimeFormat('he-IL', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(data.publishedAt);
+---
+
+<article
+  class:list={['archive-card', { 'archive-card--featured': featured }]}
+  data-searchable={`${data.title} ${data.excerpt} ${data.author}`}
+>
+  <a class="archive-card__visual" href={articleUrl} tabindex="-1" aria-hidden="true">
+    {
+      data.cover ? (
+        <img src={data.cover} alt="" loading="lazy" />
+      ) : (
+        <span class="archive-card__brand-art">
+          <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+          <span>GGNEWS</span>
+        </span>
+      )
+    }
+    <span class="archive-card__category">{isTestArticle ? 'בדיקת מערכת' : 'כתבות'}</span>
+  </a>
+
+  <div class="archive-card__body">
+    <div class="archive-card__labels">
+      {isTestArticle && <span class="article-test-badge">כתבת בדיקה</span>}
+    </div>
+
+    <div class="archive-card__meta">
+      <time datetime={data.publishedAt.toISOString()}>{publishedLabel}</time>
+      <span aria-hidden="true">•</span>
+      <span>{data.author}</span>
+      <span aria-hidden="true">•</span>
+      <span>{readingMinutes} דק׳ קריאה</span>
+    </div>
+
+    <h2><a href={articleUrl}>{data.title}</a></h2>
+    <p>{data.excerpt}</p>
+    <a class="article-read-link" href={articleUrl} aria-label={`לקריאת הכתבה: ${data.title}`}>
+      לכתבה המלאה <span aria-hidden="true">←</span>
+    </a>
+  </div>
+</article>

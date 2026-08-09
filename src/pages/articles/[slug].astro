@@ -1,0 +1,128 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/articles.css';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => !data.draft);
+
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const { data } = article;
+const isTestArticle = article.id === 'welcome-to-ggnews';
+const readingMinutes = Math.max(1, Math.ceil(article.body.trim().split(/\s+/u).length / 200));
+const publishedLabel = new Intl.DateTimeFormat('he-IL', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(data.publishedAt);
+const updatedLabel = data.updatedAt
+  ? new Intl.DateTimeFormat('he-IL', { day: 'numeric', month: 'long', year: 'numeric' }).format(data.updatedAt)
+  : null;
+const youtubeUrl = data.youtubeId ? `https://www.youtube-nocookie.com/embed/${data.youtubeId}` : null;
+---
+
+<BaseLayout title={`${data.title} | GGNEWS`} description={data.excerpt}>
+  <main id="main-content" class="article-page">
+    <article>
+      <header class="article-hero">
+        <div class="shell article-hero__inner">
+          <nav class="article-breadcrumbs" aria-label="פירורי לחם">
+            <a href="/">ראשי</a>
+            <span aria-hidden="true">/</span>
+            <a href="/articles/">כתבות</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{isTestArticle ? 'בדיקת מערכת' : 'כתבה'}</span>
+          </nav>
+
+          <div class="article-hero__labels">
+            <span class="article-category">{isTestArticle ? 'בדיקת מערכת' : 'כתבות'}</span>
+            {isTestArticle && <span class="article-test-badge article-test-badge--hero">כתבת בדיקה — לא דיווח חדשותי</span>}
+          </div>
+
+          <h1>{data.title}</h1>
+          <p class="article-hero__description">{data.excerpt}</p>
+
+          <div class="article-byline">
+            <span class="article-byline__avatar" aria-hidden="true">GG</span>
+            <div class="article-byline__author">
+              <strong>{data.author}</strong>
+            </div>
+            <div class="article-byline__facts">
+              <time datetime={data.publishedAt.toISOString()}>{publishedLabel}</time>
+              <span aria-hidden="true">•</span>
+              <span>{readingMinutes} דק׳ קריאה</span>
+              {updatedLabel && <span class="article-updated">עודכן: {updatedLabel}</span>}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="shell article-reading-grid">
+        <aside class="article-side" aria-label="פרטי הכתבה">
+          <span class="article-side__label">נושא</span>
+          <strong>{isTestArticle ? 'בדיקת מערכת' : 'כתבות'}</strong>
+          <a href="/articles/">← לכל הכתבות</a>
+        </aside>
+
+        <div class="article-main-column">
+          <div class:list={['article-cover', { 'article-cover--brand': !data.cover }]}>
+            {
+              data.cover ? (
+                <img src={data.cover} alt={`תמונה ראשית: ${data.title}`} />
+              ) : (
+                <div class="article-cover__brand-art" aria-label="GGNEWS">
+                  <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+                  <div><span>GG</span><strong>NEWS</strong></div>
+                </div>
+              )
+            }
+          </div>
+
+          {
+            youtubeUrl && (
+              <section class="article-video" aria-labelledby="article-video-title">
+                <div class="article-video__heading">
+                  <span>מצורף לכתבה</span>
+                  <h2 id="article-video-title">הסרטון המלא</h2>
+                </div>
+                <div class="article-video__frame">
+                  <iframe
+                    src={youtubeUrl}
+                    title={`סרטון עבור הכתבה: ${data.title}`}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  />
+                </div>
+              </section>
+            )
+          }
+
+          <div class="article-prose">
+            <Content />
+          </div>
+
+          <footer class="article-end">
+            <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+            <div>
+              <span>סוף הכתבה</span>
+              <strong>תודה שקראתם GGNEWS.</strong>
+            </div>
+            <a href="/articles/">לכתבות נוספות <span aria-hidden="true">←</span></a>
+          </footer>
+        </div>
+      </div>
+    </article>
+  </main>
+</BaseLayout>

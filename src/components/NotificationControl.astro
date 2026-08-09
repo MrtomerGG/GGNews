@@ -1,0 +1,61 @@
+---
+import notificationSettings from '../data/notifications.json';
+
+const appId = notificationSettings.appId.trim();
+const isConfigured = notificationSettings.enabled && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(appId);
+---
+
+{
+  isConfigured && (
+    <div class="notification-control" data-notification-control data-onesignal-app-id={appId}>
+      <button
+        class="icon-button notification-toggle"
+        type="button"
+        data-notification-toggle
+        aria-label="פתיחת הגדרות התראות"
+        aria-haspopup="dialog"
+        aria-controls="notification-panel"
+        aria-expanded="false"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"></path>
+          <path d="M10 21h4"></path>
+        </svg>
+        <span class="notification-toggle__dot" data-notification-dot aria-hidden="true"></span>
+      </button>
+
+      <section
+        class="notification-panel"
+        id="notification-panel"
+        data-notification-panel
+        role="dialog"
+        aria-labelledby="notification-title"
+        hidden
+      >
+        <div class="notification-panel__header">
+          <span class="notification-panel__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"></path>
+              <path d="M10 21h4"></path>
+            </svg>
+          </span>
+          <div>
+            <span class="notification-panel__eyebrow">GGNEWS ALERTS</span>
+            <h2 id="notification-title">התראות על כתבות חדשות</h2>
+          </div>
+          <button class="notification-panel__close" type="button" data-notification-close aria-label="סגירת חלון ההתראות">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+          </button>
+        </div>
+
+        <p class="notification-panel__status" data-notification-status aria-live="polite">
+          בודקים אם ניתן להפעיל התראות במכשיר הזה…
+        </p>
+        <button class="notification-panel__action" type="button" data-notification-action disabled>
+          טוען…
+        </button>
+        <p class="notification-panel__privacy">ההרשמה היא לבחירתכם בלבד ואפשר לכבות אותה כאן בכל רגע.</p>
+      </section>
+    </div>
+  )
+}

@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import '../styles/articles.css';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+const featuredArticle = articles.find(({ data }) => data.featured) ?? articles[0];
+const otherArticles = articles.filter(({ id }) => id !== featuredArticle?.id);
+const leadTitle = featuredArticle?.data.title ?? 'החדשות של עולם tomer_GG, במקום אחד.';
+const highlightToken = leadTitle.includes('GGNEWS')
+  ? 'GGNEWS'
+  : leadTitle.includes('tomer_GG')
+    ? 'tomer_GG'
+    : undefined;
+const [leadBefore, leadAfter] = highlightToken ? leadTitle.split(highlightToken) : [leadTitle, ''];
+const leadUrl = featuredArticle ? `/articles/${featuredArticle.id}/` : '/articles';
+const leadIsTest = featuredArticle?.id === 'welcome-to-ggnews';
+const leadAuthor = featuredArticle?.data.author ?? 'מערכת GGNEWS';
+const leadExcerpt = featuredArticle?.data.excerpt ?? 'כתבות, סיפורים וסרטונים מעולם tomer_GG FANCLUB.';
+const leadDate = featuredArticle
+  ? new Intl.DateTimeFormat('he-IL', { day: 'numeric', month: 'long', year: 'numeric' }).format(featuredArticle.data.publishedAt)
+  : undefined;
+---
+
+<BaseLayout>
+  <main id="main-content">
+    <section class="hero shell" aria-labelledby="lead-title">
+      <article class="lead-story" data-searchable={`${leadTitle} ${leadExcerpt} ${leadAuthor}`}>
+        <div class="lead-story__glow" aria-hidden="true"></div>
+        <img class="lead-story__watermark" src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+        <div class="lead-story__content">
+          <div class="story-labels">
+            <span class="eyebrow">חדשות הגג</span>
+            {leadIsTest && <span class="test-label">כתבת בדיקה</span>}
+          </div>
+          <h1 id="lead-title">
+            {leadBefore}{highlightToken && <span>{highlightToken}</span>}{leadAfter}
+          </h1>
+          <p>{leadExcerpt}</p>
+          <div class="lead-story__footer">
+            <a class="primary-button" href={leadUrl}>לכתבה המלאה <span aria-hidden="true">←</span></a>
+            <div class="story-byline">
+              <span class="story-byline__avatar">GG</span>
+              <span><strong>{leadAuthor}</strong>{leadDate && <small>{leadDate}</small>}</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="articles-section shell" id="articles" aria-labelledby="articles-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">הסיפורים שלנו</span>
+          <h2 id="articles-title">כתבות אחרות שלנו</h2>
+        </div>
+        <a class="section-heading__note section-heading__link" href="/articles">לכל הכתבות ←</a>
+      </div>
+
+      {
+        otherArticles.length > 0 ? (
+          <div class="archive-grid home-articles-grid">
+            {otherArticles.slice(0, 4).map((article) => <ArticleCard article={article} />)}
+          </div>
+        ) : (
+          <div class="upcoming-panel" aria-label="כתבות שיתפרסמו בהמשך">
+            <div class="upcoming-panel__top">
+              <span class="upcoming-panel__icon" aria-hidden="true">+</span>
+              <div><span class="section-kicker">בהמשך</span><h3>כתבות נוספות בדרך</h3></div>
+            </div>
+            <p>כשיתפרסמו כתבות נוספות, הן יופיעו כאן אוטומטית — בלי לשכפל את הכתבה הראשית.</p>
+          </div>
+        )
+      }
+
+      <p class="search-empty" data-search-empty hidden>לא נמצאו כתבות שמתאימות לחיפוש.</p>
+    </section>
+
+    <section class="about-strip shell" id="about">
+      <div class="about-strip__mark"><img src="/assets/brand/ggnews-crest-cropped.png" alt="" /></div>
+      <div class="about-strip__copy">
+        <span class="section-kicker">מי אנחנו</span>
+        <h2>חדשות הגג - הלב של הפאנקלב | כל הדברים החמים במקום אחד.</h2>
+        <p>אנחנו מביאים כתבות, ראיונות, סיפורים מהפאנקלב ומוציאים אותם לעולם ללא שקרים.</p>
+      </div>
+      <a class="secondary-button" href="/about">עוד על GGNEWS <span aria-hidden="true">←</span></a>
+    </section>
+  </main>
+
+</BaseLayout>
