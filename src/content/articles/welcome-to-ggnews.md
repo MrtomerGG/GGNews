@@ -5,7 +5,7 @@ publishedAt: 2026-08-09T04:39:00Z
 author: מערכת GGNEWS
 featured: true
 draft: false
-youtubeId: QzzTx-_iwds
+youtubeId: wJljSDNn1xg
 ---
 > **לתשומת לבכם:** זוהי כתבת בדיקה של האתר. היא אינה דיווח חדשותי ואינה מציגה אירוע שלא התרחש.
 
