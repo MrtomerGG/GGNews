@@ -6,7 +6,7 @@ publishedAt: 2026-06-07T23:08:00Z
 updatedAt: 2026-06-12T12:00:00Z
 youtubeId: oez-UPsBcW8
 featured: false
-draft: true
+draft: false
 ---
 חדשות הגג פותחים במצב חירום.
 
