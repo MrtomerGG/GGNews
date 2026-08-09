@@ -37,7 +37,7 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft)).so
       {
         articles.length > 0 ? (
           <div class="archive-grid">
-            {articles.map((article, index) => <ArticleCard article={article} featured={index === 0} />)}
+            {articles.map((article, index) => <ArticleCard article={article} featured={index === 0} overlay />)}
           </div>
         ) : (
           <div class="archive-empty">

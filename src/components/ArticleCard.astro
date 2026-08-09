@@ -4,12 +4,14 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   article: CollectionEntry<'articles'>;
   featured?: boolean;
+  overlay?: boolean;
 }
 
-const { article, featured = false } = Astro.props;
+const { article, featured = false, overlay = false } = Astro.props;
 const { data, id } = article;
 const articleUrl = `/articles/${id}/`;
 const isTestArticle = id === 'welcome-to-ggnews';
+const categoryLabel = isTestArticle ? 'בדיקת מערכת' : 'כתבות';
 const readingMinutes = Math.max(1, Math.ceil(article.body.trim().split(/\s+/u).length / 200));
 const publishedLabel = new Intl.DateTimeFormat('he-IL', {
   day: 'numeric',
@@ -19,7 +21,14 @@ const publishedLabel = new Intl.DateTimeFormat('he-IL', {
 ---
 
 <article
-  class:list={['archive-card', { 'archive-card--featured': featured }]}
+  class:list={[
+    'archive-card',
+    {
+      'archive-card--featured': featured,
+      'archive-card--overlay': overlay,
+      'archive-card--has-cover': overlay && data.cover,
+    },
+  ]}
   data-searchable={`${data.title} ${data.excerpt} ${data.author}`}
 >
   <a class="archive-card__visual" href={articleUrl} tabindex="-1" aria-hidden="true">
@@ -33,11 +42,12 @@ const publishedLabel = new Intl.DateTimeFormat('he-IL', {
         </span>
       )
     }
-    <span class="archive-card__category">{isTestArticle ? 'בדיקת מערכת' : 'כתבות'}</span>
+    <span class="archive-card__category">{categoryLabel}</span>
   </a>
 
   <div class="archive-card__body">
     <div class="archive-card__labels">
+      {overlay && <span class="archive-card__category archive-card__category--inline">{categoryLabel}</span>}
       {isTestArticle && <span class="article-test-badge">כתבת בדיקה</span>}
     </div>
 
