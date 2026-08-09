@@ -5,7 +5,7 @@ author: הגג - תומר
 publishedAt: 2026-06-06T01:58:00Z
 updatedAt: 2026-06-08T12:00:00Z
 youtubeId: Wq118WT3WbE
-featured: false
+featured: true
 draft: false
 ---
 ## אביעד שבי חוגג יום הולדת 16
@@ -20,3 +20,4 @@ draft: false
 לכבוד יום ההולדת שבי זכה בשובר שבתוקף ל24 שעות בשביל השניצל והפסטה של הגג
 
 > **עדכון: **שבי אינו מימש את הטבע שלו
+
