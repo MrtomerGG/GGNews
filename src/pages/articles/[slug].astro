@@ -35,7 +35,8 @@ const youtubeUrl = data.youtubeId ? `https://www.youtube-nocookie.com/embed/${da
 <BaseLayout title={`${data.title} | GGNEWS`} description={data.excerpt}>
   <main id="main-content" class="article-page">
     <article>
-      <header class="article-hero">
+      <header class:list={['article-hero', { 'article-hero--with-cover': data.cover }]}>
+        {data.cover && <img class="article-hero__cover" src={data.cover} alt="" aria-hidden="true" loading="eager" fetchpriority="high" decoding="async" />}
         <div class="shell article-hero__inner">
           <nav class="article-breadcrumbs" aria-label="פירורי לחם">
             <a href="/">ראשי</a>
@@ -77,25 +78,8 @@ const youtubeUrl = data.youtubeId ? `https://www.youtube-nocookie.com/embed/${da
 
         <div class="article-main-column">
           {
-            (data.cover || !youtubeUrl) && (
-              <div class:list={['article-cover', { 'article-cover--brand': !data.cover }]}>
-                {
-                  data.cover ? (
-                    <img src={data.cover} alt={`תמונה ראשית: ${data.title}`} />
-                  ) : (
-                    <div class="article-cover__brand-art" aria-label="GGNEWS">
-                      <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
-                      <div><span>GG</span><strong>NEWS</strong></div>
-                    </div>
-                  )
-                }
-              </div>
-            )
-          }
-
-          {
             youtubeUrl && (
-              <section class:list={['article-video', { 'article-video--first': !data.cover }]} aria-labelledby="article-video-title">
+              <section class="article-video article-video--first" aria-labelledby="article-video-title">
                 <div class="article-video__heading">
                   <span>מצורף לכתבה</span>
                   <h2 id="article-video-title">הסרטון המלא</h2>

@@ -17,6 +17,7 @@ const highlightToken = leadTitle.includes('GGNEWS')
     : undefined;
 const [leadBefore, leadAfter] = highlightToken ? leadTitle.split(highlightToken) : [leadTitle, ''];
 const leadUrl = featuredArticle ? `/articles/${featuredArticle.id}/` : '/articles';
+const leadCover = featuredArticle?.data.cover;
 const leadIsTest = featuredArticle?.id === 'welcome-to-ggnews';
 const leadAuthor = featuredArticle?.data.author ?? 'מערכת GGNEWS';
 const leadExcerpt = featuredArticle?.data.excerpt ?? 'כתבות, סיפורים וסרטונים מעולם tomer_GG FANCLUB.';
@@ -28,9 +29,10 @@ const leadDate = featuredArticle
 <BaseLayout>
   <main id="main-content">
     <section class="hero shell" aria-labelledby="lead-title">
-      <article class="lead-story" data-searchable={`${leadTitle} ${leadExcerpt} ${leadAuthor}`}>
-        <div class="lead-story__glow" aria-hidden="true"></div>
-        <img class="lead-story__watermark" src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+      <article class:list={['lead-story', { 'lead-story--with-cover': leadCover }]} data-searchable={`${leadTitle} ${leadExcerpt} ${leadAuthor}`}>
+        {leadCover && <img class="lead-story__cover" src={leadCover} alt="" aria-hidden="true" loading="eager" fetchpriority="high" decoding="async" />}
+        {!leadCover && <div class="lead-story__glow" aria-hidden="true"></div>}
+        {!leadCover && <img class="lead-story__watermark" src="/assets/brand/ggnews-crest-cropped.png" alt="" />}
         <div class="lead-story__content">
           <div class="story-labels">
             <span class="eyebrow">חדשות הגג</span>

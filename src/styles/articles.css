@@ -355,7 +355,25 @@
   color: #fff;
 }
 
+.article-hero__cover {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.article-hero--with-cover::before {
+  background:
+    linear-gradient(to top, rgba(2, 10, 21, .95) 0%, rgba(2, 10, 21, .58) 58%, rgba(2, 10, 21, .34) 100%),
+    linear-gradient(to left, rgba(2, 10, 21, .72), rgba(2, 10, 21, .14));
+}
+
 .article-hero__inner {
+  position: relative;
+  z-index: 1;
   max-width: 1010px;
   padding-block: 42px 74px;
 }
@@ -400,6 +418,15 @@
   margin: 25px 0 34px;
   color: #b9cbd9;
   font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+
+.article-hero--with-cover h1 {
+  text-shadow: 0 4px 32px rgba(0, 0, 0, .58);
+}
+
+.article-hero--with-cover .article-hero__description {
+  color: #eef5fa;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, .72);
 }
 
 .article-byline {
@@ -522,59 +549,6 @@
   min-width: 0;
 }
 
-.article-cover {
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.article-cover > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.article-cover--brand {
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 30% 20%, #0d6b94, transparent 35%),
-    linear-gradient(145deg, #082f55, #031224 72%);
-}
-
-.article-cover__brand-art {
-  direction: ltr;
-  display: flex;
-  align-items: center;
-  gap: clamp(12px, 4vw, 32px);
-  color: #fff;
-}
-
-.article-cover__brand-art > img {
-  width: clamp(110px, 21vw, 180px);
-  filter: drop-shadow(0 20px 38px rgba(0, 0, 0, .32));
-}
-
-.article-cover__brand-art > div {
-  display: grid;
-  line-height: .8;
-}
-
-.article-cover__brand-art span {
-  font-size: clamp(3rem, 9vw, 6.2rem);
-  font-weight: 1000;
-  letter-spacing: -.1em;
-}
-
-.article-cover__brand-art strong {
-  margin-top: 16px;
-  color: var(--gold);
-  font-size: clamp(.65rem, 1.5vw, .9rem);
-  letter-spacing: .5em;
-}
-
 .article-video {
   margin-top: 34px;
   padding: clamp(18px, 3vw, 28px);
@@ -622,6 +596,10 @@
   color: var(--ink);
   font-size: clamp(1.04rem, 1.45vw, 1.15rem);
   line-height: 1.88;
+}
+
+.article-main-column > .article-prose:first-child {
+  margin-top: 0;
 }
 
 .article-prose > :first-child {
@@ -819,18 +797,6 @@
     width: calc(100% - 28px);
     padding-block: 28px 72px;
     gap: 22px;
-  }
-
-  .article-cover {
-    border-radius: 19px;
-  }
-
-  .article-cover__brand-art > img {
-    width: 92px;
-  }
-
-  .article-cover__brand-art strong {
-    margin-top: 10px;
   }
 
   .article-prose {
