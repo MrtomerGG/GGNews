@@ -7,6 +7,7 @@ updatedAt: 2026-06-08T12:00:00Z
 youtubeId: Wq118WT3WbE
 featured: false
 draft: false
+cover: /assets/uploads/3860bd3e-fb04-45e0-8713-1fa600a19215.png
 ---
 ## אביעד שבי חוגג יום הולדת 16
 
