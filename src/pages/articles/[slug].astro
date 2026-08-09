@@ -76,22 +76,26 @@ const youtubeUrl = data.youtubeId ? `https://www.youtube-nocookie.com/embed/${da
         </aside>
 
         <div class="article-main-column">
-          <div class:list={['article-cover', { 'article-cover--brand': !data.cover }]}>
-            {
-              data.cover ? (
-                <img src={data.cover} alt={`תמונה ראשית: ${data.title}`} />
-              ) : (
-                <div class="article-cover__brand-art" aria-label="GGNEWS">
-                  <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
-                  <div><span>GG</span><strong>NEWS</strong></div>
-                </div>
-              )
-            }
-          </div>
+          {
+            (data.cover || !youtubeUrl) && (
+              <div class:list={['article-cover', { 'article-cover--brand': !data.cover }]}>
+                {
+                  data.cover ? (
+                    <img src={data.cover} alt={`תמונה ראשית: ${data.title}`} />
+                  ) : (
+                    <div class="article-cover__brand-art" aria-label="GGNEWS">
+                      <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+                      <div><span>GG</span><strong>NEWS</strong></div>
+                    </div>
+                  )
+                }
+              </div>
+            )
+          }
 
           {
             youtubeUrl && (
-              <section class="article-video" aria-labelledby="article-video-title">
+              <section class:list={['article-video', { 'article-video--first': !data.cover }]} aria-labelledby="article-video-title">
                 <div class="article-video__heading">
                   <span>מצורף לכתבה</span>
                   <h2 id="article-video-title">הסרטון המלא</h2>
