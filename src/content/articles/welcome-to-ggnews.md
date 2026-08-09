@@ -1,5 +1,5 @@
 ---
-title: ברוכים הבאים ל-GGNEWS
+title: ברוכים הבאים ל-GGNEWS לכאורה
 excerpt: כתבת היכרות ובדיקה שמציגה כיצד כתבות אמיתיות ייראו באתר GGNEWS.
 publishedAt: 2026-08-09T04:39:00Z
 author: מערכת GGNEWS
