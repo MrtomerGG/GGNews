@@ -1,0 +1,297 @@
+GGNEWS - AI HANDOFF AND NEW-COMPUTER GUIDE
+Last updated: 2026-08-09
+
+READ THIS FIRST
+===============
+
+This file is for a future AI assistant or developer continuing the GGNEWS project.
+The user is tomer_GG. Communicate clearly and give beginner-friendly, exact steps.
+Do not add fake news or placeholder articles unless the user explicitly asks for them.
+Preserve articles and Pages CMS changes made by the user.
+
+
+PROJECT IDENTITY
+================
+
+Name: GGNEWS / GGNews / חדשות הגג
+Public domain: https://ggnews.club
+GitHub repository: https://github.com/MrtomerGG/GGNews
+Primary language: Hebrew (RTL)
+Audience: tomer_GG FANCLUB
+Parent media organization: GGMG
+Tone: a modern, professional digital news website inside the tomer_GG community world.
+
+
+TECHNICAL STACK
+===============
+
+- Astro 5 static website
+- Node.js 20 or newer
+- GitHub repository, production branch: main
+- Cloudflare Pages hosting (NOT GitHub Pages)
+- Pages CMS for editing articles and public site settings
+- OneSignal Web SDK v16 for opt-in browser notifications
+
+Cloudflare Pages build settings:
+
+  Production branch: main
+  Build command: npm run build
+  Output directory: dist
+  Root directory: leave empty
+
+Cloudflare automatically deploys every merged/pushed change to main.
+Never upload the dist directory manually; it is generated and ignored by Git.
+
+
+NEW COMPUTER SETUP
+==================
+
+The project should be downloaded from GitHub. It does not need to be emailed.
+
+Install first:
+
+1. Git for Windows: https://git-scm.com/download/win
+2. Node.js 20 LTS or newer: https://nodejs.org/
+3. The preferred editor or AI coding tool.
+
+Recommended clone commands:
+
+  git clone https://github.com/MrtomerGG/GGNews.git
+  cd GGNews
+  npm install
+  npm run dev
+
+Then open:
+
+  http://localhost:4321
+
+Production verification:
+
+  npm run build
+  npm run preview
+
+If using GitHub Desktop instead:
+
+1. Open GitHub Desktop.
+2. Select File > Clone repository.
+3. Select URL.
+4. Enter https://github.com/MrtomerGG/GGNews.git
+5. Choose a local folder and clone.
+6. Open PowerShell in the cloned folder.
+7. Run npm install and npm run dev.
+
+Downloading GitHub's ZIP is possible, but cloning is strongly preferred because a ZIP has no Git history and cannot pull or push changes normally.
+
+
+SAFE START FOR EVERY AI/DEVELOPER SESSION
+=========================================
+
+Before editing:
+
+1. Read this file, README.md, .pages.yml, and the relevant source files.
+2. Run git status --short --branch.
+3. Preserve any unrelated or uncommitted user changes.
+4. Run git pull --rebase origin main before beginning if the worktree is clean.
+5. Remember that Pages CMS may create new commits while local work is happening.
+
+Before uploading code:
+
+1. Run npm run build.
+2. Inspect git diff and git status.
+3. Commit only the intended files.
+4. Run git pull --rebase origin main again to preserve recent Pages CMS changes.
+5. Rebuild if remote content changed.
+6. Push to origin/main.
+
+Never use destructive Git commands such as git reset --hard to solve a conflict.
+
+
+CONTENT AND PUBLISHING
+======================
+
+Article source files:
+
+  src/content/articles/*.md
+
+Uploaded article images:
+
+  public/assets/uploads/
+
+Article schema:
+
+- title: required
+- excerpt: required
+- publishedAt: required
+- updatedAt: optional
+- author: required
+- featured: true/false
+- draft: true/false
+- cover: optional image path
+- youtubeId: optional 11-character YouTube video ID
+- body: Markdown article content
+
+Article behavior:
+
+- Draft articles are hidden.
+- The newest article marked featured is the large homepage story.
+- If no article is featured, the newest published article is used.
+- Keep only one intended featured article.
+- Videos are part of their articles; there is no separate video section.
+- Article covers appear behind the title on the homepage hero, the article page hero,
+  and cards on the all-articles page.
+- Articles without covers use the branded GGNEWS fallback.
+
+Pages CMS publishing flow:
+
+1. Sign in at https://app.pagescms.org/ with GitHub.
+2. Open MrtomerGG/GGNews.
+3. Open כתבות and create or edit an article.
+4. Keep טיוטה enabled while drafting.
+5. Save and merge the generated GitHub pull request if required.
+6. When ready, disable טיוטה, save, and merge again.
+7. Wait for Cloudflare's production deployment to report Success.
+8. Verify the result at https://ggnews.club and hard refresh if necessary.
+
+Pages CMS also controls:
+
+- הודעת האתר: the dismissible announcement below the navigation.
+- הגדרות התראות: the public OneSignal App ID and notification enable switch.
+
+localhost and the public website are separate:
+
+- localhost:4321 reads the files on the current computer.
+- ggnews.club reads the latest successful Cloudflare deployment from GitHub main.
+- After an online Pages CMS edit, run git pull origin main to update the local copy.
+
+
+IMPORTANT DESIGN REQUIREMENTS
+============================
+
+- Main language and layout are Hebrew RTL.
+- Use clean Segoe UI / Arial / Noto Sans Hebrew-style fonts.
+- Do not introduce decorative display fonts for interface labels or buttons.
+- Colors use the GGNEWS navy, cyan, white, and gold palette.
+- The site should look like a real modern news network, not a visual parody.
+- Keep navigation easy for friends on desktop and mobile.
+- Current main sections: homepage, latest article, all articles, and about.
+- Do not add a live-stream section unless the user requests it later.
+- YouTube videos may be embedded inside articles using only their 11-character ID.
+
+Relevant files:
+
+  src/layouts/BaseLayout.astro
+  src/components/SiteHeader.astro
+  src/components/SiteFooter.astro
+  src/components/ArticleCard.astro
+  src/pages/index.astro
+  src/pages/articles/index.astro
+  src/pages/articles/[slug].astro
+  src/pages/about.astro
+  src/styles/global.css
+  src/styles/articles.css
+  src/styles/support-pages.css
+  src/content.config.ts
+  .pages.yml
+
+
+ONESIGNAL NOTIFICATIONS - CURRENT STATUS
+========================================
+
+The website-side integration is installed and enabled.
+
+Public OneSignal App ID:
+
+  b584eb1f-6db3-4e68-befa-329e1082d122
+
+Public Safari Web ID:
+
+  web.onesignal.auto.0d033746-9b8a-4e2f-a0e7-88cee0acb9dd
+
+Service worker URL:
+
+  https://ggnews.club/push/onesignal/OneSignalSDKWorker.js
+
+Source service worker file:
+
+  public/push/onesignal/OneSignalSDKWorker.js
+
+The subdirectory worker location is intentional and supported by OneSignal.
+The initialization options are in public/scripts/notifications.js.
+Do not paste OneSignal's generated initialization snippet again; that would initialize the SDK twice.
+Keep notifyButton.enable set to false because GGNEWS already has its own bell in the header.
+
+Automatic sending files:
+
+  .github/workflows/notify-new-articles.yml
+  scripts/notify-new-articles.mjs
+
+PRIVATE SECRET:
+
+The OneSignal App API Key must be stored only in this GitHub Actions repository secret:
+
+  ONESIGNAL_APP_API_KEY
+
+Never write its value in this file, source code, Pages CMS, chat, or a Git commit.
+The public App ID is not the private API key.
+
+Immediate remaining OneSignal steps for the user:
+
+1. Create an App API Key in OneSignal under Settings > Keys & IDs.
+2. Add it to GitHub under Settings > Secrets and variables > Actions using the exact
+   secret name ONESIGNAL_APP_API_KEY.
+3. Wait for a successful Cloudflare deployment.
+4. Open https://ggnews.club in a normal browser window, click the GGNEWS bell,
+   select הפעלת התראות, and allow browser notifications.
+5. Confirm the device appears in OneSignal under Audience > Subscriptions.
+6. Send a manual test push from OneSignal.
+
+Automatic notification behavior:
+
+- Creating a public article or changing draft from true to false triggers the workflow.
+- Editing an already-public article does not normally trigger a new alert.
+- The workflow waits for the article page to become live on Cloudflare before sending.
+- The alert uses the article title, excerpt, cover, and final article URL.
+
+
+DOMAIN AND HOSTING
+==================
+
+- Canonical production origin: https://ggnews.club
+- Use the non-www address for OneSignal subscriptions.
+- www.ggnews.club is not required unless it is explicitly configured later.
+- Namecheap owns/renews the domain.
+- Cloudflare controls DNS and hosts the site.
+- Current public nameservers are:
+
+  elaine.ns.cloudflare.com
+  vasilii.ns.cloudflare.com
+
+- Do not configure this project through GitHub Pages and do not add a GitHub Pages CNAME file.
+
+
+KNOWN NEXT DEVELOPMENT WORK
+===========================
+
+The user previously requested an SEO/news-discovery package, but it has not yet been implemented.
+Future work should include:
+
+- sitemap.xml
+- RSS feed
+- robots.txt
+- canonical URLs
+- Open Graph and social preview metadata
+- per-article NewsArticle JSON-LD / Google News-compatible metadata
+- Google Search Console setup after those files are live
+
+Do not begin this work unless the user asks to continue with it.
+
+
+FINAL SAFETY NOTES
+==================
+
+- Never expose OneSignal App API keys, GitHub tokens, passwords, or recovery codes.
+- The public OneSignal App ID and Safari Web ID may remain in source code.
+- Confirm uploaded photos are intended for public display.
+- Do not overwrite articles when rebasing or resolving conflicts.
+- Do not create fake content merely to make a page look populated.
+- Build and visually verify meaningful design changes on desktop and mobile.
