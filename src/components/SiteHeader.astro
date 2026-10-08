@@ -15,6 +15,7 @@ const isArticlesArchive = pathname === '/articles' || pathname === '/articles/';
 ---
 
 <header class="site-header" data-header>
+  <div class="header-utility"><div class="shell"><span>החדשות של קהילת <bdi>tomer_GG FANCLUB</bdi></span><time data-current-date></time></div></div>
   <div class="shell header-main">
     <a class="brand" href="/" aria-label="GGNEWS — עמוד הבית">
       <img class="brand__crest" src="/assets/brand/ggnews-crest-cropped.png" alt="" width="58" height="58" />
@@ -22,10 +23,10 @@ const isArticlesArchive = pathname === '/articles' || pathname === '/articles/';
     </a>
 
     <nav class="desktop-nav" aria-label="ניווט ראשי">
-      <a class:list={[{ 'is-active': isActive('/') }]} href="/">ראשי</a>
-      <a class:list={[{ 'is-active': isLatestArticle }]} href={latestArticleUrl}>כתבה אחרונה</a>
-      <a class:list={[{ 'is-active': isArticlesArchive || (isActive('/articles') && !isLatestArticle) }]} href="/articles">כל הכתבות</a>
-      <a class:list={[{ 'is-active': isActive('/about') }]} href="/about">אודות</a>
+      <a class:list={[{ 'is-active': isActive('/') }]} aria-current={isActive('/') ? 'page' : undefined} href="/">ראשי</a>
+      <a class:list={[{ 'is-active': isLatestArticle }]} aria-current={isLatestArticle ? 'page' : undefined} href={latestArticleUrl}>כתבה אחרונה</a>
+      <a class:list={[{ 'is-active': isArticlesArchive || (isActive('/articles') && !isLatestArticle) }]} aria-current={isArticlesArchive ? 'page' : undefined} href="/articles">כל הכתבות</a>
+      <a class:list={[{ 'is-active': isActive('/about') }]} aria-current={isActive('/about') ? 'page' : undefined} href="/about">אודות</a>
     </nav>
 
     <div class="header-actions">
@@ -54,10 +55,10 @@ const isArticlesArchive = pathname === '/articles' || pathname === '/articles/';
   </div>
 
   <nav class="mobile-nav" data-mobile-nav aria-label="ניווט לנייד" hidden>
-    <a href="/">ראשי</a>
-    <a href={latestArticleUrl}>כתבה אחרונה</a>
-    <a href="/articles">כל הכתבות</a>
-    <a href="/about">אודות</a>
+    <a href="/" aria-current={isActive('/') ? 'page' : undefined}>ראשי</a>
+    <a href={latestArticleUrl} aria-current={isLatestArticle ? 'page' : undefined}>כתבה אחרונה</a>
+    <a href="/articles" aria-current={isArticlesArchive ? 'page' : undefined}>כל הכתבות</a>
+    <a href="/about" aria-current={isActive('/about') ? 'page' : undefined}>אודות</a>
   </nav>
 
   {

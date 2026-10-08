@@ -1,4 +1,12 @@
 const root = document.documentElement;
+const currentDate = document.querySelector('[data-current-date]');
+if (currentDate) {
+  const now = new Date();
+  currentDate.textContent = new Intl.DateTimeFormat('he-IL', {
+    day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Jerusalem',
+  }).format(now);
+  currentDate.dateTime = now.toISOString();
+}
 const themeToggle = document.querySelector('[data-theme-toggle]');
 const searchToggle = document.querySelector('[data-search-toggle]');
 const searchPanel = document.querySelector('[data-search-panel]');
@@ -34,7 +42,7 @@ if (siteAnnouncement) {
 themeToggle?.addEventListener('click', () => {
   const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
   root.dataset.theme = theme;
-  localStorage.setItem('ggnews-theme', theme);
+  try { localStorage.setItem('ggnews-theme', theme); } catch {}
 });
 
 searchToggle?.addEventListener('click', () => {

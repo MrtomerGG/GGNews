@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 import '../styles/articles.css';
+import '../styles/home.css';
 
 const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
@@ -10,87 +11,59 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft)).so
 const featuredArticle = articles.find(({ data }) => data.featured) ?? articles[0];
 const otherArticles = articles.filter(({ id }) => id !== featuredArticle?.id);
 const leadTitle = featuredArticle?.data.title ?? 'החדשות של עולם tomer_GG, במקום אחד.';
-const highlightToken = leadTitle.includes('GGNEWS')
-  ? 'GGNEWS'
-  : leadTitle.includes('tomer_GG')
-    ? 'tomer_GG'
-    : undefined;
-const [leadBefore, leadAfter] = highlightToken ? leadTitle.split(highlightToken) : [leadTitle, ''];
-const leadUrl = featuredArticle ? `/articles/${featuredArticle.id}/` : '/articles';
-const leadCover = featuredArticle?.data.cover;
-const leadIsTest = featuredArticle?.id === 'welcome-to-ggnews';
-const leadAuthor = featuredArticle?.data.author ?? 'מערכת GGNEWS';
 const leadExcerpt = featuredArticle?.data.excerpt ?? 'כתבות, סיפורים וסרטונים מעולם tomer_GG FANCLUB.';
+const leadAuthor = featuredArticle?.data.author ?? 'מערכת GGNEWS';
+const leadUrl = featuredArticle ? `/articles/${featuredArticle.id}/` : '/articles/';
 const leadDate = featuredArticle
-  ? new Intl.DateTimeFormat('he-IL', { day: 'numeric', month: 'long', year: 'numeric' }).format(featuredArticle.data.publishedAt)
+  ? new Intl.DateTimeFormat('he-IL', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Jerusalem' }).format(featuredArticle.data.publishedAt)
   : undefined;
+const readingMinutes = featuredArticle ? Math.max(1, Math.ceil(featuredArticle.body.trim().split(/\s+/u).length / 200)) : undefined;
 ---
 
 <BaseLayout>
-  <main id="main-content">
-    <section class="hero shell" aria-labelledby="lead-title">
-      <article class:list={['lead-story', { 'lead-story--with-cover': leadCover }]} data-searchable={`${leadTitle} ${leadExcerpt} ${leadAuthor}`}>
-        {leadCover && <img class="lead-story__cover" src={leadCover} alt="" aria-hidden="true" loading="eager" fetchpriority="high" decoding="async" />}
-        {!leadCover && <div class="lead-story__glow" aria-hidden="true"></div>}
-        {!leadCover && <img class="lead-story__watermark" src="/assets/brand/ggnews-crest-cropped.png" alt="" />}
-        <div class="lead-story__content">
-          <div class="story-labels">
-            <span class="eyebrow">חדשות הגג</span>
-            {leadIsTest && <span class="test-label">כתבת בדיקה</span>}
+  <main id="main-content" class="home-page">
+    <div class="shell edition-heading">
+      <div><span class="edition-heading__line" aria-hidden="true"></span><span>חדשות הגג</span><span class="edition-heading__divider" aria-hidden="true">/</span><span class="edition-heading__description">הסיפורים של הקהילה שלנו</span></div>
+      <a href="/articles/">כל הכתבות <span aria-hidden="true">←</span></a>
+    </div>
+    <section class="shell home-feature" aria-labelledby="lead-title">
+      <article class="feature-story" data-searchable={`${leadTitle} ${leadExcerpt} ${leadAuthor}`}>
+        <a class:list={['feature-story__visual', { 'feature-story__visual--fallback': !featuredArticle?.data.cover }]} href={leadUrl} tabindex="-1" aria-hidden="true">
+          {featuredArticle?.data.cover ? (
+            <img src={featuredArticle.data.cover} alt="" loading="eager" fetchpriority="high" decoding="async" />
+          ) : (
+            <img src="/assets/brand/ggnews-crest-cropped.png" alt="" />
+          )}
+          {featuredArticle?.data.youtubeId && <span class="feature-story__video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z" /></svg>כולל סרטון</span>}
+        </a>
+        <div class="feature-story__body">
+          <div class="feature-story__kicker"><span></span>הסיפור המרכזי{featuredArticle?.id === 'welcome-to-ggnews' && <span class="article-test-badge">כתבת בדיקה</span>}</div>
+          <h1 id="lead-title"><a href={leadUrl}>{leadTitle}</a></h1>
+          <p class="feature-story__excerpt">{leadExcerpt}</p>
+          <div class="feature-story__meta">
+            <strong>{leadAuthor}</strong>
+            {leadDate && <time datetime={featuredArticle!.data.publishedAt.toISOString()}>{leadDate}</time>}
+            {readingMinutes && <span>{readingMinutes} דקות קריאה</span>}
           </div>
-          <h1 id="lead-title">
-            {leadBefore}{highlightToken && <span>{highlightToken}</span>}{leadAfter}
-          </h1>
-          <p>{leadExcerpt}</p>
-          <div class="lead-story__footer">
-            <a class="primary-button" href={leadUrl}>לכתבה המלאה <span aria-hidden="true">←</span></a>
-            <div class="story-byline">
-              <span class="story-byline__avatar">GG</span>
-              <span><strong>{leadAuthor}</strong>{leadDate && <small>{leadDate}</small>}</span>
-            </div>
-          </div>
+          <a class="primary-button" href={leadUrl}>לכתבה המלאה <span aria-hidden="true">←</span></a>
         </div>
       </article>
-
     </section>
-
-    <section class="articles-section shell" id="articles" aria-labelledby="articles-title">
+    <section class="shell articles-section" id="articles" aria-labelledby="articles-title">
       <div class="section-heading">
-        <div>
-          <span class="section-kicker">הסיפורים שלנו</span>
-          <h2 id="articles-title">כתבות אחרות שלנו</h2>
-        </div>
-        <a class="section-heading__note section-heading__link" href="/articles">לכל הכתבות ←</a>
+        <div><span class="section-kicker">עוד מהמערכת</span><h2 id="articles-title">סיפורים נוספים</h2></div>
+        <a class="section-heading__link" href="/articles/">לכל הכתבות <span aria-hidden="true">←</span></a>
       </div>
-
-      {
-        otherArticles.length > 0 ? (
-          <div class="archive-grid home-articles-grid">
-            {otherArticles.slice(0, 4).map((article) => <ArticleCard article={article} />)}
-          </div>
-        ) : (
-          <div class="upcoming-panel" aria-label="כתבות שיתפרסמו בהמשך">
-            <div class="upcoming-panel__top">
-              <span class="upcoming-panel__icon" aria-hidden="true">+</span>
-              <div><span class="section-kicker">בהמשך</span><h3>כתבות נוספות בדרך</h3></div>
-            </div>
-            <p>כשיתפרסמו כתבות נוספות, הן יופיעו כאן אוטומטית — בלי לשכפל את הכתבה הראשית.</p>
-          </div>
-        )
-      }
-
+      {otherArticles.length > 0 ? (
+        <div class="archive-grid home-articles-grid">{otherArticles.slice(0, 4).map((article) => <ArticleCard article={article} />)}</div>
+      ) : (
+        <div class="upcoming-panel"><h3>כתבות נוספות בדרך</h3><p>הסיפורים הבאים של הקהילה יופיעו כאן.</p></div>
+      )}
       <p class="search-empty" data-search-empty hidden>לא נמצאו כתבות שמתאימות לחיפוש.</p>
     </section>
-
-    <section class="about-strip shell" id="about">
-      <div class="about-strip__mark"><img src="/assets/brand/ggnews-crest-cropped.png" alt="" /></div>
-      <div class="about-strip__copy">
-        <span class="section-kicker">מי אנחנו</span>
-        <h2>חדשות הגג - הלב של הפאנקלב | כל הדברים החמים במקום אחד.</h2>
-        <p>אנחנו מביאים כתבות, ראיונות, סיפורים מהפאנקלב ומוציאים אותם לעולם ללא שקרים.</p>
-      </div>
-      <a class="secondary-button" href="/about">עוד על GGNEWS <span aria-hidden="true">←</span></a>
+    <section class="shell community-panel" aria-labelledby="community-title">
+      <div class="community-panel__identity"><img src="/assets/brand/ggnews-crest-cropped.png" alt="" /><span dir="ltr">THE COMMUNITY.<br />THE STORIES.</span></div>
+      <div class="community-panel__copy"><span class="section-kicker">נעים להכיר, אנחנו GGNEWS</span><h2 id="community-title">חדשות הגג.<br />הלב של הפאנקלב.</h2><p>האנשים, הסיפורים וכל מה שקורה בעולם tomer_GG FANCLUB.</p><a href="/about/">הכירו את המערכת <span aria-hidden="true">←</span></a></div>
     </section>
   </main>
-
 </BaseLayout>

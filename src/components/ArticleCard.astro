@@ -43,6 +43,7 @@ const publishedLabel = new Intl.DateTimeFormat('he-IL', {
       )
     }
     <span class="archive-card__category">{categoryLabel}</span>
+    {data.youtubeId && <span class="archive-card__video" aria-label="כולל סרטון"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z" /></svg></span>}
   </a>
 
   <div class="archive-card__body">

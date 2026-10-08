@@ -40,7 +40,8 @@ const notificationsConfigured = notificationSettings.enabled
     }
     <script is:inline>
       (() => {
-        const saved = localStorage.getItem('ggnews-theme');
+        let saved;
+        try { saved = localStorage.getItem('ggnews-theme'); } catch {}
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
       })();

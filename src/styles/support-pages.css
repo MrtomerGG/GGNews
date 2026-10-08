@@ -61,8 +61,8 @@
 
 .support-hero__copy h1 {
   margin: 18px 0 22px;
-  font-size: clamp(3.2rem, 6.7vw, 6rem);
-  line-height: .94;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 1.15;
   letter-spacing: -.07em;
 }
 
@@ -190,8 +190,8 @@
 .about-intro h2,
 .support-section-heading h2 {
   margin: 4px 0 0;
-  font-size: clamp(2.2rem, 4.3vw, 4.2rem);
-  line-height: 1;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.2;
   letter-spacing: -.055em;
 }
 
@@ -211,7 +211,7 @@
   display: grid;
   grid-template-columns: minmax(250px, .9fr) minmax(0, 1fr);
   border: 1px solid var(--line);
-  border-radius: 24px;
+  border-radius: 10px;
   background: var(--surface);
   box-shadow: 0 18px 55px rgba(4, 23, 44, .08);
 }
@@ -318,7 +318,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   border: 1px solid var(--line);
-  border-radius: 25px;
+  border-radius: 10px;
   background: var(--surface);
   box-shadow: 0 18px 55px rgba(4, 23, 44, .07);
   transition: transform 180ms ease, border-color 180ms ease;
@@ -689,3 +689,21 @@
     transition: none;
   }
 }
+
+.support-page::before, .support-hero__orbit, .support-hero__code { display: none; }
+.support-hero { min-height: 440px; padding-block: 60px; }
+.support-hero__art { border-radius: 12px; background: var(--navy-950); aspect-ratio: 4 / 3; box-shadow: none; }
+.support-hero__art::before { display: none; }
+.support-hero__art > img { width: 52%; filter: none; }
+.support-eyebrow { color: var(--accent); letter-spacing: .07em; }
+.about-intro { padding-block: 64px; grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr); gap: 40px; }
+.tomer-intro { box-shadow: none; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); }
+.team-section { padding-block: 64px; }
+.team-card { box-shadow: none; }
+.team-card h3 { line-height: 1.25; font-size: 1.7rem; }
+.team-card__media { aspect-ratio: 4 / 3; }
+.team-card__media img { object-position: center 30%; }
+.coverage-band__inner { min-height: 72px; }
+.coverage-band i { box-shadow: none; }
+@media (max-width: 920px) { .about-intro { grid-template-columns: 1fr; } .support-hero { min-height: 0; } }
+@media (max-width: 650px) { .support-hero { padding-block: 36px; } .support-hero__copy h1 { font-size: 2.6rem; line-height: 1.2; } .support-hero__art { max-width: none; } .about-intro, .team-section { padding-block: 40px; } .tomer-intro { grid-template-columns: 1fr; } }
