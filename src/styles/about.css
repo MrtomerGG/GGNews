@@ -1,0 +1,68 @@
+.about-page .support-hero { grid-template-columns: minmax(0, 1.4fr) minmax(0, .65fr); min-height: 0; padding-block: 48px; gap: 64px; }
+.about-page .support-hero__art { width: 100%; max-width: 320px; aspect-ratio: 1; justify-self: end; }
+.about-page .support-hero__art > img { width: 58%; }
+.about-page .support-hero__copy h1 { font-size: clamp(2.6rem, 4.3vw, 3.9rem); letter-spacing: -.04em; }
+.about-page .support-hero__copy > p { font-size: 1.06rem; line-height: 1.85; }
+.founder-section { padding-block: 12px 60px; }
+.founder-profile { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.founder-profile__portrait { position: relative; min-width: 0; overflow: hidden; background: var(--navy-950); }
+.founder-profile__portrait > img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.founder-profile__signature { position: absolute; bottom: 24px; right: 24px; padding: 8px 13px; border: 1px solid #ffffff30; border-radius: 4px; background: #061a32d9; color: white; font-size: .8rem; font-weight: 700; letter-spacing: .04em; }
+.founder-profile__copy { padding: clamp(28px, 4vw, 52px); display: flex; flex-direction: column; justify-content: center; min-width: 0; border-top: 3px solid var(--gold); }
+.founder-profile h2 { margin: 8px 0 20px; font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.25; letter-spacing: -.03em; }
+.founder-profile h2 bdi { color: var(--muted); font-size: .65em; font-weight: 500; }
+.founder-profile__roles { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0 0 32px; list-style: none; }
+.founder-profile__roles li { padding: 5px 11px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface-soft); color: var(--muted); font-size: .78rem; }
+.founder-profile__quotes { padding-top: 26px; border-top: 1px solid var(--line); }
+.founder-profile__quote { margin: 0; }
+.founder-profile__quote p { margin: 0; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.28; letter-spacing: -.03em; }
+.founder-profile__quote--secondary { margin-top: 22px; padding-inline-start: 16px; border-inline-start: 2px solid var(--gold); }
+.founder-profile__quote--secondary p { max-width: 410px; color: var(--muted); font-size: 1rem; font-weight: 400; line-height: 1.8; letter-spacing: 0; }
+.about-page .team-section { padding-block: 56px 72px; }
+.about-page .support-section-heading { padding-bottom: 24px; margin-bottom: 28px; border-bottom: 1px solid var(--line); }
+.about-page .support-section-heading h2 { font-size: 2.3rem; letter-spacing: -.03em; }
+.team-count { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-size: .78rem; white-space: nowrap; }
+.team-count strong { color: var(--accent); font-size: 1.5rem; font-weight: 600; }
+.about-page .team-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.about-page .team-card { border-radius: 10px; }
+.about-page .team-card__media { aspect-ratio: 1; }
+.about-page .team-card__media img { object-position: center; }
+.about-page .team-card__media::after { display: none; }
+.about-page .team-card__copy { padding: 24px; }
+.about-page .team-card h3 { margin-bottom: 12px; font-size: 1.35rem; line-height: 1.3; letter-spacing: -.02em; }
+.team-card__nickname { display: block; margin-top: 4px; color: var(--muted); font-size: .85rem; font-weight: 400; letter-spacing: 0; }
+.about-page .team-card__role { font-size: .82rem; line-height: 1.6; }
+.about-page .team-card__description { margin-top: 12px; font-size: .9rem; line-height: 1.8; }
+.about-page .team-card__number { min-width: 30px; min-height: 28px; top: 14px; right: 14px; border-radius: 4px; font-size: .65rem; }
+.about-page .coverage-band__inner { flex-wrap: wrap; width: var(--shell); padding-block: 18px; justify-content: center; gap: 18px 28px; }
+.about-page .coverage-band span, .about-page .coverage-band i { display: block; }
+@media (max-width: 1100px) { .about-page .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 920px) {
+  .about-page .support-hero { grid-template-columns: minmax(0, 1fr) minmax(0, .5fr); gap: 28px; }
+  .founder-profile__roles { margin-bottom: 24px; }
+  .founder-profile__copy { padding: 28px; }
+  .founder-profile__quote p { font-size: 2.15rem; }
+  .founder-profile__quote--secondary p { font-size: .95rem; }
+  .about-page .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 650px) {
+  .about-page .support-hero { grid-template-columns: 1fr; padding-block: 32px; gap: 24px; }
+  .about-page .support-hero__copy h1 { font-size: 2.65rem; }
+  .about-page .support-hero__art { display: none; }
+  .about-page .support-hero__copy > p { font-size: .98rem; }
+  .founder-section { padding-block: 8px 36px; }
+  .founder-profile { grid-template-columns: 1fr; }
+  .founder-profile__portrait { aspect-ratio: 1; }
+  .founder-profile__copy { padding: 26px; }
+  .founder-profile h2 { font-size: 2rem; }
+  .founder-profile__quote p { font-size: 2.25rem; }
+  .founder-profile__quote--secondary p { font-size: .98rem; }
+  .about-page .team-section { padding-block: 36px 48px; }
+  .about-page .support-section-heading { flex-direction: row; align-items: flex-end; gap: 12px; }
+  .about-page .support-section-heading h2 { font-size: 1.9rem; }
+  .about-page .team-grid { grid-template-columns: 1fr; gap: 24px; }
+  .about-page .team-card h3 { font-size: 1.6rem; }
+  .team-card__nickname { display: inline; margin-inline-start: 8px; }
+  .about-page .team-card__copy { padding: 24px; }
+  .about-page .coverage-band__inner { gap: 14px 18px; }
+}
