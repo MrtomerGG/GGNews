@@ -4,7 +4,7 @@ excerpt: איפה היה הגג? חדשות הגג חוזרות עם הנחיו�
 author: הגג - תומר
 publishedAt: 2026-07-12T23:00:00Z
 youtubeId: xmA4LqfuGbI
-featured: true
+featured: false
 draft: false
 cover: /assets/uploads/7d8872f6-e00f-4705-9108-ae828b6f36d1-1.png
 ---
